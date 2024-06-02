@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content />
+    <meta name="author" content />
+    <title>Contact Us</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="https://s3.ap-south-1.amazonaws.com/samskruthifacilities.com/Images/Logo/logo.jpg" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="https://s3.ap-south-1.amazonaws.com/www.samskruthifacilities.com/css/styles.css" rel="stylesheet" />
+    <!--Old Bootstarp-->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,300">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.1.2/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400&family=Finger+Paint&display=swap">
+    <style>
+        .g_map {
+            height: 300px; /* Adjust the height as needed */
+        }
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            z-index: 1000;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        #header h1 {
+            font-size: 18px;
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+        #message-section {
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        #input-section {
+            display: flex;
+        }
+        #input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0 0 0 5px;
+        }
+        .send {
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 0 5px 0;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+    <!--Chat Bot-->
+    <div class="chatbot-container">
+        <!--Chatbot-->
+        <div class="style">
+            <div class="card">
+                <div id="header">
+                    <h1>Chatter box!</h1>
+                </div>
+                <div id="message-section"></div>
+                <div id="input-section">
+                    <input id="input" type="text" placeholder="Type a message" autocomplete="off" autofocus="autofocus" />
+                    <button class="send" id="sendButton">
+                        <div class="circle"><i class="zmdi zmdi-mail-send"></i></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sendButton = document.getElementById("sendButton");
+            const inputField = document.getElementById("input");
+            const messageSection = document.getElementById("message-section");
+
+            sendButton.addEventListener("click", sendMessage);
+            inputField.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                const message = inputField.value.trim();
+                if (message !== "") {
+                    displayMessage("You", message);
+                    // Generate a bot response
+                    const botResponse = generateBotResponse(message);
+                    displayMessage("Bot", botResponse);
+                    inputField.value = "";
+                }
+            }
+
+            function generateBotResponse(userMessage) {
+                let response;
+                // Check for specific questions and provide appropriate answers
+                if (userMessage.toLowerCase().includes("fever") && userMessage.toLowerCase().includes("three days")) {
+                    response = "If you have a fever that has lasted for more than three days, it is important to see a healthcare provider. They may recommend over-the-counter medications like acetaminophen or ibuprofen to help reduce the fever. In some cases, they might prescribe antibiotics if a bacterial infection is suspected.";
+                } else if (userMessage.toLowerCase().includes("inhaler") && userMessage.toLowerCase().includes("correctly")) {
+                    response = "To use an inhaler correctly, shake the inhaler well, exhale completely, place the mouthpiece in your mouth, press the canister while inhaling deeply and slowly, hold your breath for about 10 seconds, and then exhale slowly. Using a spacer can also help ensure the medication is delivered effectively to your lungs.";
+                } else if (userMessage.toLowerCase().includes("asthma medications") && userMessage.toLowerCase().includes("side effects")) {
+                    response = "Yes, some common side effects of inhaled corticosteroids include throat irritation and thrush (a fungal infection in the mouth). Beta-agonists can cause jitteriness, increased heart rate, and headaches. It's important to discuss any side effects with your healthcare provider, who can adjust your treatment plan if needed.";
+                } else {
+                    // Default response
+                    response = "Hello! This is a sample bot response.";
+                }
+                return response;
+            }
+
+            function displayMessage(sender, message) {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+                messageSection.appendChild(messageElement);
+                // Auto-scroll to the bottom of the message section
+                messageSection.scrollTop = messageSection.scrollHeight;
+            }
+        });
+    </script>
+
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded">
+            <div class="container px-5">
+                <a class="navbar-brand" href="index.html">Contact Us</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="C:\Users\Krithika\OneDrive\Desktop\HealthLens\dash.html"><i class="bi bi-house"></i>Overview</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-telephone"></i>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content-->
+        <section class="py-5">
+            <div class="container px-5">
+                <!-- Map Widget -->
+                <div class="contact_container"> 
+                    <h2>Contact Us</h2>
+                    <div class="g_map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.074585313692!2d78.43543731487886!3d17.40917428806345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9730c2ff944d%3A0x135d3152abf98e4d!2sCare%20Hospital%2C%20Hyderabad!5e0!3m2!1sen!2sin!4v1623125336245!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="contact_content">
+                        <p><b>Address: Care Hospital, Hyderabad, Telangana, 500033, India</b></p>
+                        <p><b>Call: +91 40 1234 5678</b></p>
+                        <p><b>Mail: info@carehospital.com</b></p>
+                    </div> 
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
